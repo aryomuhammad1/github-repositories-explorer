@@ -3,18 +3,19 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 type SearchBarProps = {
+    initInput?: string;
     onSearch: (query: string) => void;
     loading: boolean;
 };
 
-export default function SearchBar({ onSearch, loading }: SearchBarProps) {
-    const [input, setInput] = useState('');
+export default function SearchBar({ initInput, onSearch, loading }: SearchBarProps) {
+    const [input, setInput] = useState(initInput ?? '');
 
     const handleSubmit = (e: React.FormEvent) => {
+        if (!input.trim()) return;
+
         e.preventDefault();
-        if (input.trim()) {
-            onSearch(input.trim());
-        }
+        onSearch(input.trim());
     };
 
     return (
@@ -30,12 +31,11 @@ export default function SearchBar({ onSearch, loading }: SearchBarProps) {
                 />
                 <Button
                     type="submit"
-                    disabled={loading}
+                    disabled={loading || !input.trim()}
                     className="w-full bg-blue-500 hover:bg-blue-600 text-white text-base py-5 font-normal rounded-none">
                     {loading ? 'Searching...' : 'Search'}
                 </Button>
             </form>
-            {input && <p className="mt-2 text-base text-gray-600">Showing users for "{input}"</p>}
         </>
     );
 }
