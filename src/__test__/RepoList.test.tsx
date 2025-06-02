@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/react';
 import RepoList from '@/components/RepoList';
-import { renderWithClient } from '@/utils';
+import { renderWithClient } from '@/lib/utils';
 import { server } from '@/mock/server';
 
 beforeAll(() => server.listen());

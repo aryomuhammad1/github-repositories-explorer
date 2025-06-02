@@ -1,7 +1,7 @@
 import { waitFor } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import App from '@/App';
-import { renderWithClient } from '@/utils';
+import { renderWithClient } from '@/lib/utils';
 import { server } from '@/mock/server';
 
 beforeAll(() => server.listen());
