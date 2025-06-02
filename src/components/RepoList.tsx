@@ -1,7 +1,7 @@
+import { useQuery } from '@tanstack/react-query';
 import type { GitHubRepo } from '@/types/github';
+import { fetchRepos } from '@/api/github';
 import { Card } from '@/components/ui/card';
-import { useEffect, useState } from 'react';
-import { fetchRepos } from '@/api/github.ts';
 
 type RepoListProps = {
     username: string;
@@ -9,36 +9,25 @@ type RepoListProps = {
 };
 
 export default function RepoList({ username, isActive }: RepoListProps) {
-    const [repos, setRepos] = useState<GitHubRepo[] | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const {
+        data: repos,
+        isLoading,
+        isError,
+        error,
+    } = useQuery<GitHubRepo[], Error>({
+        queryKey: ['repos', username],
+        queryFn: () => fetchRepos(username),
+        enabled: isActive,
+        staleTime: 1000 * 60 * 5,
+    });
 
-    useEffect(() => {
-        if (!isActive || repos) return;
-
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                setError(null);
-                const result = await fetchRepos(username);
-                setRepos(result);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [isActive, username, repos]);
-
-    if (loading) return <p className="mt-2 text-base text-gray-600">Loading repos...</p>;
-    if (error) return <p className="text-red-500">Failed to fetch repos: {error}</p>;
+    if (isLoading) return <p className="mt-2 text-base text-gray-600">Loading repos...</p>;
+    if (isError) return <p className="text-red-500">Failed to fetch repos: {error.message}</p>;
     if (!repos || repos.length === 0) return <p className="mt-2 text-base text-gray-600">No repositories found.</p>;
 
     return (
         <div className="space-y-3">
-            {repos?.map((repo) => (
+            {repos.map((repo) => (
                 <Card
                     key={repo.id}
                     className="bg-gray-300 px-4 py-3 rounded-none">
