@@ -32,15 +32,16 @@ export default function App() {
 
             {!isError && !isLoading && (
                 <>
-                    {users.length > 0 ? (
+                    {users.length > 0 && (
                         <>
                             <p className="mt-2 text-base text-gray-600">Showing users for "{query}"</p>
                             <UserList users={users} />
                         </>
-                    ) : (
-                        <p className="mt-2 text-base text-gray-600">No users found.</p>
                     )}
                 </>
+            )}
+            {!isError && !isLoading && query && !users.length && (
+                <p className="mt-2 text-base text-gray-600">No users found.</p>
             )}
         </div>
     );
