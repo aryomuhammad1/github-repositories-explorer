@@ -21,7 +21,7 @@ export default function UserList({ users }: UserListProps) {
                     key={user.login}
                     value={user.login}>
                     <AccordionTrigger
-                        className="bg-gray-100 p-2 rounded-none text-left hover:bg-gray-50 font-normal text-base justify-between"
+                        className="bg-gray-100 p-2 rounded-none text-left hover:bg-gray-50 font-normal text-base justify-between cursor-pointer"
                         onClick={() => setActiveUser(user.login)}>
                         {user.login}
                     </AccordionTrigger>

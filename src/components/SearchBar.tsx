@@ -32,7 +32,7 @@ export default function SearchBar({ initInput, onSearch, loading }: SearchBarPro
                 <Button
                     type="submit"
                     disabled={loading || !input.trim()}
-                    className="w-full bg-blue-500 hover:bg-blue-600 text-white text-base py-5 font-normal rounded-none">
+                    className="w-full bg-blue-500 hover:bg-blue-600 text-white text-base py-5 font-normal rounded-none cursor-pointer">
                     {loading ? 'Searching...' : 'Search'}
                 </Button>
             </form>
