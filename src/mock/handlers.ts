@@ -4,12 +4,10 @@ import mockUsers from './mockUsers';
 
 export const handlers = [
     rest.get('https://api.github.com/search/users', (req, res, ctx) => {
-        console.log('req bro : ', req);
         return res(ctx.status(200), ctx.json({ items: mockUsers }));
     }),
 
     rest.get('https://api.github.com/users/:username/repos', (req, res, ctx) => {
-        console.log('req bro : ', req);
         return res(ctx.status(200), ctx.json(mockRepos));
     }),
 ];
